@@ -18,6 +18,6 @@ class GameBoard {
   private:
     const int num_rows = 10;
     const int num_cols = 10;
-}
+};
 
 #endif //GAMEBOARD_H

@@ -1,2 +1,2 @@
 all:
-	g++ main.cpp
+	g++ GameBoard.cc main.cc
