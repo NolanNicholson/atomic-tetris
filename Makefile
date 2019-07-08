@@ -1,2 +1,2 @@
 all:
-	g++ GameBoard.cc main.cc
+	g++ Block.cc GameBoard.cc main.cc
