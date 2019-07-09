@@ -2,4 +2,5 @@
 
 int main() {
   front_ncurses::start();
+  front_ncurses::quit();
 }
