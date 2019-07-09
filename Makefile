@@ -1,2 +1,2 @@
-all:
-	g++ Block.cc Piece.cc GameBoard.cc main.cc
+ncurses:
+	g++ Block.cc Piece.cc GameBoard.cc front_ncurses.cc main_ncurses.cc -lncurses
