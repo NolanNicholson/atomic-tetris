@@ -9,12 +9,20 @@
 void front_ncurses::start() {
   //Initialize ncurses
   initscr();
-  raw();
+  cbreak();
   keypad(stdscr, TRUE);
 
   //Initialize color
   start_color();
   use_default_colors();
+
+  //Create window to hold the game board
+  gameboard_win = newwin(
+      GameBoard::num_total_rows,
+      GameBoard::num_cols,
+      2, 2); //starty, startx
+  box(gameboard_win, 0, 0);
+
 }
 
 void front_ncurses::render(GameBoard gb) {
@@ -22,12 +30,14 @@ void front_ncurses::render(GameBoard gb) {
     for (int x = 0; x < 10; x++) {
       //Since characters are half-width, we have to render twice
       //to make a square
-      move(y, 2*x);
-      addch('[');
-      move(y, 2*x+1);
-      addch(']');
+      //mvwaddch(gameboard_win, y, 2*x  , '[');
+      //mvwaddch(gameboard_win, y, 2*x+1, ']');
+
+      mvaddch(y, 2*x  , '[');
+      mvaddch(y, 2*x+1, ']');
     }
   }
+  wrefresh(gameboard_win);
 }
 
 void front_ncurses::wait_for_input() {
@@ -35,5 +45,6 @@ void front_ncurses::wait_for_input() {
 }
 
 void front_ncurses::quit() {
+  delwin(gameboard_win);
   endwin();
 }

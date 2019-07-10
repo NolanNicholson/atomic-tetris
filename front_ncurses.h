@@ -10,18 +10,23 @@
 #include "GameBoard.h"
 #include <ncurses.h>
 
-namespace front_ncurses {
-  void start();
-  //Initializes ncurses graphical frontend and starts the game
+class front_ncurses {
+  public:
+    void start();
+    //Initializes ncurses graphical frontend and starts the game
 
-  void render(GameBoard gb);
-  //Renders the screen, including the provided GameBoard
+    void render(GameBoard gb);
+    //Renders the screen, including the provided GameBoard
 
-  void wait_for_input();
-  //Just waits for input - allows pausing and examining output
+    void wait_for_input();
+    //Just waits for input - allows pausing and examining output
 
-  void quit();
-  //Wraps up ncurses graphical frontend and quits the game
+    void quit();
+    //Wraps up ncurses graphical frontend and quits the game
+
+  private:
+    WINDOW *gameboard_win;
+
 };
 
 #endif //FRONT_NCURSES_H

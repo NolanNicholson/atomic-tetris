@@ -17,12 +17,12 @@ class GameBoard {
     void remove_line(int y_remove);
     //Removes the line at position y.
 
-  private:
     static const int num_visible_rows = 20; 
     static const int num_buffer_rows = 4; //hold pieces above the player view
     static const int num_total_rows = num_buffer_rows + num_visible_rows;
-
     static const int num_cols = 10;
+
+  private:
 
     //Internal representation of the game board.
     //y = 0 is at the bottom, not the top -

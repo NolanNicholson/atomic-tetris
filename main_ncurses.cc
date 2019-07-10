@@ -3,9 +3,10 @@
 
 int main() {
   GameBoard gb_test;
+  front_ncurses fn;
 
-  front_ncurses::start();
-  front_ncurses::render(gb_test);
-  front_ncurses::wait_for_input();
-  front_ncurses::quit();
+  fn.start();
+  fn.render(gb_test);
+  fn.wait_for_input();
+  fn.quit();
 }
