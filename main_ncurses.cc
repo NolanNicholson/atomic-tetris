@@ -5,8 +5,8 @@ int main() {
   GameBoard gb_test;
   front_ncurses fn;
 
-  //TODO: remove - test randomizing the board
-  for (int y = 0; y < 20; y++) {
+  //Test randomizing the board. TODO: remove later
+  for (int y = 0; y < 10; y++) {
     gb_test.randomize_line(y);
   }
 

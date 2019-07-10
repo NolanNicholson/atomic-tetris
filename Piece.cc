@@ -28,16 +28,30 @@ Piece::Piece(BlockType type) {
   }
   piece_type = type;
 
+  int *x = &local_x[0], *y = &local_y[0]; //aliases for more compact code
+
   //Designate the piece
   switch(type) {
-    case kLBlock: local_x[0] = 0;
-                  local_x[1] = 0;
-                  local_x[2] = 0;
-                  local_x[3] = 1;
-                  local_y[0] = 1;
-                  local_y[1] = 0;
-                  local_y[2] = -1;
-                  local_y[3] = -1;
+    case kRBlock: x[0] =  0; x[1] =  0; x[2] =  0; x[3] =  1;
+                  y[0] =  1; y[1] =  0; y[2] = -1; y[3] = -1;
+                  break;
+    case kLBlock: x[0] =  0; x[1] =  0; x[2] =  0; x[3] = -1;
+                  y[0] =  1; y[1] =  0; y[2] = -1; y[3] = -1;
+                  break;
+    case kSBlock: x[0] =  0; x[1] =  0; x[2] =  1; x[3] =  1;
+                  y[0] = -1; y[1] =  0; y[2] =  0; y[3] =  1;
+                  break;
+    case kZBlock: x[0] =  0; x[1] =  0; x[2] =  1; x[3] =  1;
+                  y[0] =  1; y[1] =  0; y[2] =  0; y[3] = -1;
+                  break;
+    case kIBlock: x[0] = -1; x[1] =  0; x[2] =  1; x[3] =  2;
+                  y[0] =  0; y[1] =  0; y[2] =  0; y[3] =  0;
+                  break;
+    case kOBlock: x[0] =  0; x[1] =  0; x[2] =  1; x[3] =  1;
+                  y[0] =  0; y[1] =  1; y[2] =  0; y[3] =  1;
+                  break;
+    case kTBlock: x[0] = -1; x[1] =  0; x[2] =  0; x[3] =  1;
+                  y[0] =  0; y[1] =  0; y[2] =  1; y[3] =  0;
                   break;
   }
 }
