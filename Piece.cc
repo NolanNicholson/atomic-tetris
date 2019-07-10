@@ -10,11 +10,23 @@ void Piece::rotate(bool clockwise) {
 
 }
 
+void Piece::get_coords(int x[], int y[]) const {
+  for (int i = 0; i < max_num_blocks; i++) {
+    x[i] = local_x[i];
+    y[i] = local_y[i];
+  }
+}
+
+BlockType Piece::get_type() const {
+  return piece_type;
+}
+
 Piece::Piece(BlockType type) {
   if (type == kNoBlock) {
     //Randomize the piece type if it is kNoBlock
-    type == kLBlock; //TODO
+    type = kLBlock; //TODO
   }
+  piece_type = type;
 
   //Designate the piece
   switch(type) {

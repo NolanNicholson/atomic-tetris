@@ -18,6 +18,9 @@ class GameBoard {
     BlockType get_block_type_at(int y, int x) const;
     //Returns the BlockType of the block at row y, column x.
 
+    Piece get_next_piece() const;
+    //Returns the next piece
+
     void remove_line(int y_remove);
     //Removes the line at position y.
 

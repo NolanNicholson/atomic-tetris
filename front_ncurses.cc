@@ -34,7 +34,7 @@ void front_ncurses::start() {
 
 }
 
-void front_ncurses::render_block(int y, int x, BlockType bt) {
+void front_ncurses::render_block(WINDOW *w, int y, int x, BlockType bt) {
 
   int cp = 0; //color pair number
 
@@ -49,14 +49,14 @@ void front_ncurses::render_block(int y, int x, BlockType bt) {
   }
 
   if (cp) {
-    wattron(gameboard_win, COLOR_PAIR(cp));
+    wattron(w, COLOR_PAIR(cp));
 
     //Since characters are half-width, we have to render twice
     //to make a square
-    mvwaddch(gameboard_win, GameBoard::num_visible_rows-1-y, 2*x  , ' ');
-    mvwaddch(gameboard_win, GameBoard::num_visible_rows-1-y, 2*x+1, ' ');
+    mvwaddch(w, y, 2*x  , ' ');
+    mvwaddch(w, y, 2*x+1, ' ');
 
-    wattroff(gameboard_win, COLOR_PAIR(cp));
+    wattroff(w, COLOR_PAIR(cp));
   }
 }
 
@@ -65,7 +65,9 @@ void front_ncurses::render_board(GameBoard gb) {
   for (int y = 0; y < gb.num_visible_rows; y++) {
     for (int x = 0; x < gb.num_cols; x++) {
       BlockType bt = gb.get_block_type_at(y, x);
-      front_ncurses::render_block(y, x, bt);
+      //y-coordinate has to be inverted
+      front_ncurses::render_block(gameboard_win,
+          gb.num_visible_rows-1-y, x, bt);
     }
   }
   wrefresh(gameboard_win);
@@ -74,6 +76,17 @@ void front_ncurses::render_board(GameBoard gb) {
   mvprintw(6, 30, "Level:");
   mvprintw(9, 30, "Lines:");
   refresh();
+}
+
+void front_ncurses::render_piece(WINDOW *w, Piece p, int y, int x) {
+  int x_coords[p.max_num_blocks];
+  int y_coords[p.max_num_blocks];
+  p.get_coords(x_coords, y_coords);
+
+  for (int i = 0; i < p.max_num_blocks; i++) {
+    render_block(w, y + y_coords[i], x/2 + x_coords[i], p.get_type());
+  }
+  wrefresh(w);
 }
 
 void front_ncurses::wait_for_input() {

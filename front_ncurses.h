@@ -15,11 +15,18 @@ class front_ncurses {
     void start();
     //Initializes ncurses graphical frontend and starts the game
 
-    void render_block(int y, int x, BlockType bt);
-    //Renders a single block of a specified BlockType to the screen
+    void render_block(WINDOW *w, int y, int x, BlockType bt);
+    //Renders a single block of a specified BlockType to the screen.
+    //Renders in the ncurses WINDOW pointed to by w, at in-window
+    //coordinates y and x
 
     void render_board(GameBoard gb);
     //Renders the screen, including the provided GameBoard
+    
+    void render_piece(WINDOW *w, Piece p, int y, int x);
+    //Renders a game piece.
+    //Renders in the ncurses WINDOW pointed to by w, at in-window
+    //coordinates y and x
 
     void wait_for_input();
     //Just waits for input - allows pausing and examining output

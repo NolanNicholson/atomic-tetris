@@ -19,6 +19,10 @@ BlockType GameBoard::get_block_type_at(int y, int x) const {
   return board_contents[y][x].type;
 }
 
+Piece GameBoard::get_next_piece() const {
+  return next_piece;
+}
+
 void GameBoard::remove_line(int y_remove) {
   //Move down all of the existing pieces
   for (int y = y_remove; y < num_total_rows - 1; y++) {
