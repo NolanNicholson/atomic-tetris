@@ -8,6 +8,7 @@
 //and is not intended for commercial sale
 
 #include "Block.h"
+#include "Piece.h"
 
 class GameBoard {
   public:
@@ -36,6 +37,8 @@ class GameBoard {
     //y = 0 is at the bottom, not the top -
     //this makes the buffer rows at the top a little less confusing
     Block board_contents[num_total_rows][num_cols];
+    Piece active_piece;
+    Piece next_piece;
 };
 
 #endif //GAMEBOARD_H
