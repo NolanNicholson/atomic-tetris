@@ -16,6 +16,12 @@ void front_ncurses::start() {
   start_color();
   use_default_colors();
 
+  //Initialize color pairs
+  //1-7 are for blocks: back foreground, colored background
+  for (int i = 1; i <= 7; i++) {
+    init_pair(i, COLOR_BLACK, i);
+  }
+
   //Create window to hold the game board
   gameboard_win = newwin(
       GameBoard::num_visible_rows,
@@ -29,11 +35,28 @@ void front_ncurses::start() {
 }
 
 void front_ncurses::render_block(int y, int x, BlockType bt) {
-  //Since characters are half-width, we have to render twice
-  //to make a square
-  if (bt != kNoBlock) {
-    mvwaddch(gameboard_win, GameBoard::num_visible_rows-1-y, 2*x  , '[');
-    mvwaddch(gameboard_win, GameBoard::num_visible_rows-1-y, 2*x+1, ']');
+
+  int cp = 0; //color pair number
+
+  switch (bt) {
+    case kLBlock: cp = 1; break;
+    case kRBlock: cp = 2; break;
+    case kSBlock: cp = 3; break;
+    case kZBlock: cp = 4; break;
+    case kIBlock: cp = 5; break;
+    case kTBlock: cp = 6; break;
+    case kOBlock: cp = 7; break;
+  }
+
+  if (cp) {
+    wattron(gameboard_win, COLOR_PAIR(cp));
+
+    //Since characters are half-width, we have to render twice
+    //to make a square
+    mvwaddch(gameboard_win, GameBoard::num_visible_rows-1-y, 2*x  , ' ');
+    mvwaddch(gameboard_win, GameBoard::num_visible_rows-1-y, 2*x+1, ' ');
+
+    wattroff(gameboard_win, COLOR_PAIR(cp));
   }
 }
 

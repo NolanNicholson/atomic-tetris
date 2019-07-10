@@ -6,7 +6,7 @@ int main() {
   front_ncurses fn;
 
   //TODO: remove - test randomizing the board
-  for (int y = 0; y < 4; y++) {
+  for (int y = 0; y < 20; y++) {
     gb_test.randomize_line(y);
   }
 

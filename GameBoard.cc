@@ -37,7 +37,7 @@ void GameBoard::randomize_line(int y) {
   for (int x = 0; x < num_cols; x++) {
     //TODO: make random
     //board_contents[y][x].type = static_cast<BlockType>(x % 8);
-    board_contents[y][x].type = static_cast<BlockType>(x % 7);
+    board_contents[y][x].type = static_cast<BlockType>((x+y) % 8);
   }
 }
 
