@@ -14,6 +14,12 @@ namespace front_ncurses {
   void start();
   //Initializes ncurses graphical frontend and starts the game
 
+  void render(GameBoard gb);
+  //Renders the screen, including the provided GameBoard
+
+  void wait_for_input();
+  //Just waits for input - allows pausing and examining output
+
   void quit();
   //Wraps up ncurses graphical frontend and quits the game
 };
