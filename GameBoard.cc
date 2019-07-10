@@ -27,5 +27,11 @@ void GameBoard::remove_line(int y_remove) {
   for (int x = 0; x < num_cols; x++) {
     board_contents[num_total_rows - 1][x].free();
   }
-  
+}
+
+void GameBoard::randomize_line(int y) {
+  for (int x = 0; x < num_cols; x++) {
+    //TODO: make random
+    board_contents[y][x].type = static_cast<BlockType>(x % 8);
+  }
 }

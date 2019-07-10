@@ -28,14 +28,14 @@ void front_ncurses::start() {
 
 }
 
-void front_ncurses::render(GameBoard gb) {
+void front_ncurses::render_board(GameBoard gb) {
 
   for (int y = 0; y < gb.num_visible_rows; y++) {
     for (int x = 0; x < gb.num_cols; x++) {
       //Since characters are half-width, we have to render twice
       //to make a square
-      mvwaddch(gameboard_win, y, 2*x  , '[');
-      mvwaddch(gameboard_win, y, 2*x+1, ']');
+      mvwaddch(gameboard_win, gb.num_visible_rows-1-y, 2*x  , '[');
+      mvwaddch(gameboard_win, gb.num_visible_rows-1-y, 2*x+1, ']');
     }
   }
   wrefresh(gameboard_win);

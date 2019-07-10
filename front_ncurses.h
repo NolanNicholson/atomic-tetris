@@ -15,7 +15,7 @@ class front_ncurses {
     void start();
     //Initializes ncurses graphical frontend and starts the game
 
-    void render(GameBoard gb);
+    void render_board(GameBoard gb);
     //Renders the screen, including the provided GameBoard
 
     void wait_for_input();

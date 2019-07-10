@@ -17,6 +17,9 @@ class GameBoard {
     void remove_line(int y_remove);
     //Removes the line at position y.
 
+    void randomize_line(int y);
+    //Randomizes all of the blocks in line y.
+
     static const int num_visible_rows = 20; 
     static const int num_buffer_rows = 4; //hold pieces above the player view
     static const int num_total_rows = num_buffer_rows + num_visible_rows;

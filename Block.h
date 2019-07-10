@@ -21,6 +21,7 @@ enum BlockType {
 class Block {
   public:
     BlockType type;
+    static const int num_block_types = 8;
 
     bool is_free() const;
     //Returns True if the block is free, False otherwise

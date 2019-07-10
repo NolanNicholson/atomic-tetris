@@ -5,8 +5,13 @@ int main() {
   GameBoard gb_test;
   front_ncurses fn;
 
+  //TODO: remove - test randomizing the board
+  for (int y = 0; y < 4; y++) {
+    gb_test.randomize_line(y);
+  }
+
   fn.start();
-  fn.render(gb_test);
+  fn.render_board(gb_test);
   fn.wait_for_input();
   fn.quit();
 }
