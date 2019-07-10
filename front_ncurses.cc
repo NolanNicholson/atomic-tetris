@@ -18,26 +18,32 @@ void front_ncurses::start() {
 
   //Create window to hold the game board
   gameboard_win = newwin(
-      GameBoard::num_total_rows,
-      GameBoard::num_cols,
-      2, 2); //starty, startx
-  box(gameboard_win, 0, 0);
+      GameBoard::num_visible_rows,
+      GameBoard::num_cols * 2, // *2 because chars are half-width
+      2, 4); //starty, startx
+  refresh();
+
+  //Make cursor invisible
+  curs_set(0);
 
 }
 
 void front_ncurses::render(GameBoard gb) {
-  for (int y = 0; y < 20; y++) {
-    for (int x = 0; x < 10; x++) {
+
+  for (int y = 0; y < gb.num_visible_rows; y++) {
+    for (int x = 0; x < gb.num_cols; x++) {
       //Since characters are half-width, we have to render twice
       //to make a square
-      //mvwaddch(gameboard_win, y, 2*x  , '[');
-      //mvwaddch(gameboard_win, y, 2*x+1, ']');
-
-      mvaddch(y, 2*x  , '[');
-      mvaddch(y, 2*x+1, ']');
+      mvwaddch(gameboard_win, y, 2*x  , '[');
+      mvwaddch(gameboard_win, y, 2*x+1, ']');
     }
   }
   wrefresh(gameboard_win);
+  
+  mvprintw(3, 30, "Score:");
+  mvprintw(6, 30, "Level:");
+  mvprintw(9, 30, "Lines:");
+  refresh();
 }
 
 void front_ncurses::wait_for_input() {
