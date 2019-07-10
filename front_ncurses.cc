@@ -28,14 +28,21 @@ void front_ncurses::start() {
 
 }
 
+void front_ncurses::render_block(int y, int x, BlockType bt) {
+  //Since characters are half-width, we have to render twice
+  //to make a square
+  if (bt != kNoBlock) {
+    mvwaddch(gameboard_win, GameBoard::num_visible_rows-1-y, 2*x  , '[');
+    mvwaddch(gameboard_win, GameBoard::num_visible_rows-1-y, 2*x+1, ']');
+  }
+}
+
 void front_ncurses::render_board(GameBoard gb) {
 
   for (int y = 0; y < gb.num_visible_rows; y++) {
     for (int x = 0; x < gb.num_cols; x++) {
-      //Since characters are half-width, we have to render twice
-      //to make a square
-      mvwaddch(gameboard_win, gb.num_visible_rows-1-y, 2*x  , '[');
-      mvwaddch(gameboard_win, gb.num_visible_rows-1-y, 2*x+1, ']');
+      BlockType bt = gb.get_block_type_at(y, x);
+      front_ncurses::render_block(y, x, bt);
     }
   }
   wrefresh(gameboard_win);

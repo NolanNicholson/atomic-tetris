@@ -14,11 +14,16 @@ class GameBoard {
     bool check_line_full(int y) const;
     //Checks whether the line at position y is full of blocks.
 
+    BlockType get_block_type_at(int y, int x) const;
+    //Returns the BlockType of the block at row y, column x.
+
     void remove_line(int y_remove);
     //Removes the line at position y.
 
     void randomize_line(int y);
     //Randomizes all of the blocks in line y.
+
+    GameBoard();
 
     static const int num_visible_rows = 20; 
     static const int num_buffer_rows = 4; //hold pieces above the player view

@@ -15,6 +15,10 @@ bool GameBoard::check_line_full(int y) const {
   return true;
 }
 
+BlockType GameBoard::get_block_type_at(int y, int x) const {
+  return board_contents[y][x].type;
+}
+
 void GameBoard::remove_line(int y_remove) {
   //Move down all of the existing pieces
   for (int y = y_remove; y < num_total_rows - 1; y++) {
@@ -32,6 +36,16 @@ void GameBoard::remove_line(int y_remove) {
 void GameBoard::randomize_line(int y) {
   for (int x = 0; x < num_cols; x++) {
     //TODO: make random
-    board_contents[y][x].type = static_cast<BlockType>(x % 8);
+    //board_contents[y][x].type = static_cast<BlockType>(x % 8);
+    board_contents[y][x].type = static_cast<BlockType>(x % 7);
+  }
+}
+
+GameBoard::GameBoard() {
+  //Free the entire board
+  for (int y = 0; y < num_total_rows; y++) {
+    for (int x = 0; x < num_cols; x++) {
+      board_contents[y][x].free();
+    }
   }
 }

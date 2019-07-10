@@ -15,6 +15,9 @@ class front_ncurses {
     void start();
     //Initializes ncurses graphical frontend and starts the game
 
+    void render_block(int y, int x, BlockType bt);
+    //Renders a single block of a specified BlockType to the screen
+
     void render_board(GameBoard gb);
     //Renders the screen, including the provided GameBoard
 
