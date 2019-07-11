@@ -11,7 +11,10 @@ int main() {
   }
 
   fn.start();
-  fn.render_board(gb_test);
-  fn.wait_for_input();
+  for (int i = 0; i < 6; i++) {
+    fn.render_board(gb_test);
+    gb_test.move_active_piece(1, 1);
+    fn.wait_for_input();
+  }
   fn.quit();
 }

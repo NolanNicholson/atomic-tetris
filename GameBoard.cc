@@ -23,6 +23,22 @@ Piece GameBoard::get_next_piece() const {
   return next_piece;
 }
 
+Piece GameBoard::get_active_piece() const {
+  return active_piece;
+}
+
+void GameBoard::get_active_piece_yx(int& y, int& x) const {
+  y = active_piece_y;
+  x = active_piece_x;
+}
+
+void GameBoard::move_active_piece(int dy, int dx) {
+  //Moves the active piece dy units down and dx units right.
+  active_piece_y -= dy;
+  active_piece_x += dx;
+}
+
+
 void GameBoard::remove_line(int y_remove) {
   //Move down all of the existing pieces
   for (int y = y_remove; y < num_total_rows - 1; y++) {

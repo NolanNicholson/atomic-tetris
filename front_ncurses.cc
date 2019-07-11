@@ -62,6 +62,9 @@ void front_ncurses::render_block(WINDOW *w, int y, int x, BlockType bt) {
 
 void front_ncurses::render_board(GameBoard gb) {
 
+  //Clear the board
+  werase(gameboard_win);
+
   //Render the blocks on the gameboard
   for (int y = 0; y < gb.num_visible_rows; y++) {
     for (int x = 0; x < gb.num_cols; x++) {
@@ -71,6 +74,14 @@ void front_ncurses::render_board(GameBoard gb) {
           gb.num_visible_rows-1-y, x, bt);
     }
   }
+
+  //Render the active piece
+  int active_y, active_x;
+  gb.get_active_piece_yx(active_y, active_x);
+  render_piece(gameboard_win, gb.get_active_piece(), 
+      gb.num_total_rows - 1 - active_y, //since coords are stored bottom-up
+      active_x * 2);                    //since blocks are 2 chars wide
+
   wrefresh(gameboard_win);
   
   //Print score and other information
@@ -90,7 +101,7 @@ void front_ncurses::render_piece(WINDOW *w, Piece p, int y, int x) {
   p.get_coords(x_coords, y_coords);
 
   for (int i = 0; i < p.max_num_blocks; i++) {
-    render_block(w, y + y_coords[i], x/2 + x_coords[i], p.get_type());
+    render_block(w, y - y_coords[i], x/2 + x_coords[i], p.get_type());
   }
   wrefresh(w);
 }

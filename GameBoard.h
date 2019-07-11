@@ -19,7 +19,16 @@ class GameBoard {
     //Returns the BlockType of the block at row y, column x.
 
     Piece get_next_piece() const;
-    //Returns the next piece
+    //Returns a copy of the next piece's Piece object
+
+    Piece get_active_piece() const;
+    //Returns a copy of the active piece's Piece object
+
+    void get_active_piece_yx(int& y, int& x) const;
+    //Assigns y and x to the coordinates of the active piece
+
+    void move_active_piece(int dy, int dx);
+    //Moves the active piece dy units down and dx units right.
 
     void remove_line(int y_remove);
     //Removes the line at position y.
@@ -40,7 +49,12 @@ class GameBoard {
     //y = 0 is at the bottom, not the top -
     //this makes the buffer rows at the top a little less confusing
     Block board_contents[num_total_rows][num_cols];
+
+    //The active piece and its coordinates on the game board
     Piece active_piece;
+    int active_piece_x = num_cols / 2;
+    int active_piece_y = num_total_rows;
+
     Piece next_piece;
 };
 
