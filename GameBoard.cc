@@ -38,6 +38,20 @@ void GameBoard::move_active_piece(int dy, int dx) {
   active_piece_x += dx;
 }
 
+void GameBoard::commit_active_piece() {
+  int x, y;
+  int x_coords[Piece::max_num_blocks];
+  int y_coords[Piece::max_num_blocks];
+  active_piece.get_coords(x_coords, y_coords);
+  BlockType active_type = active_piece.get_type();
+
+  for (int i = 0; i < Piece::max_num_blocks; i++) {
+    x = x_coords[i] + active_piece_x;
+    y = y_coords[i] + active_piece_y;
+    if (y >= 0 && y < num_total_rows && x >= 0 && x < num_cols)
+      board_contents[y][x].type = active_type;
+  }
+}
 
 void GameBoard::remove_line(int y_remove) {
   //Move down all of the existing pieces

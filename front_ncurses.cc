@@ -89,8 +89,8 @@ void front_ncurses::render_board(GameBoard gb) {
   int active_y, active_x;
   gb.get_active_piece_yx(active_y, active_x);
   render_piece(gameboard_win, gb.get_active_piece(), 
-      gb.num_total_rows - 1 - active_y, //since coords are stored bottom-up
-      active_x * 2);                    //since blocks are 2 chars wide
+      gb.num_visible_rows - 1 - active_y, //since coords are stored bottom-up
+      active_x * 2);                      //since blocks are 2 chars wide
   
   //Print score and other information
   mvprintw( 3, 26, "Score:");
