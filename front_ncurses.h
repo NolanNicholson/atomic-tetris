@@ -20,14 +20,14 @@ class front_ncurses {
     //Renders in the ncurses WINDOW pointed to by w, at in-window
     //coordinates y and x
 
-    void render_board(GameBoard gb);
-    //Renders the screen, including the provided GameBoard
-    
     void render_piece(WINDOW *w, Piece p, int y, int x);
     //Renders a game piece.
     //Renders in the ncurses WINDOW pointed to by w, at in-window
     //coordinates y and x
 
+    void render_board(GameBoard gb);
+    //Renders the screen, including the provided GameBoard
+    
     void wait_for_input();
     //Just waits for input - allows pausing and examining output
 

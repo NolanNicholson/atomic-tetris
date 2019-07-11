@@ -60,6 +60,16 @@ void front_ncurses::render_block(WINDOW *w, int y, int x, BlockType bt) {
   }
 }
 
+void front_ncurses::render_piece(WINDOW *w, Piece p, int y, int x) {
+  int x_coords[p.max_num_blocks];
+  int y_coords[p.max_num_blocks];
+  p.get_coords(x_coords, y_coords);
+
+  for (int i = 0; i < p.max_num_blocks; i++) {
+    render_block(w, y - y_coords[i], x/2 + x_coords[i], p.get_type());
+  }
+}
+
 void front_ncurses::render_board(GameBoard gb) {
 
   //Clear the board
@@ -81,8 +91,6 @@ void front_ncurses::render_board(GameBoard gb) {
   render_piece(gameboard_win, gb.get_active_piece(), 
       gb.num_total_rows - 1 - active_y, //since coords are stored bottom-up
       active_x * 2);                    //since blocks are 2 chars wide
-
-  wrefresh(gameboard_win);
   
   //Print score and other information
   mvprintw( 3, 26, "Score:");
@@ -92,17 +100,9 @@ void front_ncurses::render_board(GameBoard gb) {
 
   //Show the next piece
   render_piece(stdscr, gb.get_next_piece(), 15, 30);
-}
 
-void front_ncurses::render_piece(WINDOW *w, Piece p, int y, int x) {
-  int x_coords[p.max_num_blocks];
-  int y_coords[p.max_num_blocks];
-  p.get_coords(x_coords, y_coords);
-
-  for (int i = 0; i < p.max_num_blocks; i++) {
-    render_block(w, y - y_coords[i], x/2 + x_coords[i], p.get_type());
-  }
-  wrefresh(w);
+  //Update window
+  wrefresh(gameboard_win);
 }
 
 void front_ncurses::wait_for_input() {
