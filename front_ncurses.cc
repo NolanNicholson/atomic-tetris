@@ -26,7 +26,7 @@ void front_ncurses::start() {
   gameboard_win = newwin(
       GameBoard::num_visible_rows,
       GameBoard::num_cols * 2, // *2 because chars are half-width
-      2, 4); //starty, startx
+      1, 2); //starty, startx
   refresh();
 
   //Make cursor invisible
@@ -85,14 +85,13 @@ void front_ncurses::render_board(GameBoard gb) {
   wrefresh(gameboard_win);
   
   //Print score and other information
-  mvprintw(3, 30, "Score:");
-  mvprintw(6, 30, "Level:");
-  mvprintw(9, 30, "Lines:");
+  mvprintw( 3, 26, "Score:");
+  mvprintw( 6, 26, "Level:");
+  mvprintw( 9, 26, "Lines:");
+  mvprintw(12, 26, "Next:");
 
   //Show the next piece
-  render_piece(stdscr, gb.get_next_piece(), 20, 32);
-
-  refresh();
+  render_piece(stdscr, gb.get_next_piece(), 15, 30);
 }
 
 void front_ncurses::render_piece(WINDOW *w, Piece p, int y, int x) {
