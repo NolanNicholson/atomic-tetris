@@ -70,6 +70,22 @@ bool GameBoard::move_active_piece(int dy, int dx) {
   return true;
 }
 
+bool GameBoard::rotate_active_piece(bool clockwise) {
+  int new_x[Piece::max_num_blocks];
+  int new_y[Piece::max_num_blocks];
+  active_piece.get_rotated_coords(clockwise, new_x, new_y);
+
+  for (int i = 0; i < Piece::max_num_blocks; i++) {
+    if (!is_valid_and_free_location(
+          active_piece_y + new_y[i],
+          active_piece_x + new_x[i]))
+      return false;
+  }
+
+  active_piece.rotate(clockwise);
+  return true;
+}
+
 void GameBoard::commit_active_piece() {
   //Get coordinate and type information for the active piece
   int x, y;

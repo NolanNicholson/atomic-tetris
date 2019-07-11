@@ -34,6 +34,10 @@ class GameBoard {
     //Moves the active piece dy units down and dx units right,
     //but only if that move keeps the piece in a valid location.
     //Returns True if moved successfully, False if not.
+    
+    bool rotate_active_piece(bool clockwise = true);
+    //Rotates the active piece, clockwise if `clockwise` is true,
+    //`counterclockwise` if not.
 
     void reset_active_piece_coords();
     //Resets the coordinates of the active piece to the top of the board.

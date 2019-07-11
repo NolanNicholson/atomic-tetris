@@ -17,8 +17,40 @@ PieceRNG::PieceRNG()
   : generator(rand_dev()), distribution(1, 7){
 }
 
-void Piece::rotate(bool clockwise) {
+void Piece::get_rotated_coords(bool clockwise, int x[], int y[]) const {
+  int new_x[max_num_blocks];
+  int new_y[max_num_blocks];
 
+  //Perform the rotation
+  for (int i = 0; i < max_num_blocks; i++) {
+    if (clockwise) {
+      new_x[i] =  local_y[i];
+      new_y[i] = -local_x[i];
+    } else {
+      new_x[i] = -local_y[i];
+      new_y[i] =  local_x[i];
+    }
+  }
+
+  //TODO: balance new coordinates so that piece doesn't "shift" with rotation
+
+  //Populate x and y with the new coordinates
+  for (int i = 0; i < max_num_blocks; i++) {
+    x[i] = new_x[i];
+    y[i] = new_y[i];
+  }
+
+}
+
+void Piece::rotate(bool clockwise) {
+  int new_x[max_num_blocks];
+  int new_y[max_num_blocks];
+  get_rotated_coords(clockwise, new_x, new_y);
+
+  for (int i = 0; i < max_num_blocks; i++) {
+    local_x[i] = new_x[i];
+    local_y[i] = new_y[i];
+  }
 }
 
 void Piece::get_coords(int x[], int y[]) const {

@@ -25,6 +25,11 @@ class PieceRNG {
 
 class Piece {
   public:
+    void get_rotated_coords(bool clockwise, int x[], int y[]) const;
+    //Calculates the piece's local coordinates AFTER a rotation
+    //(clockwise if `clockwise` is true, else counterclockwise)
+    //Assigns those new coordinates to x and y.
+
     void rotate(bool clockwise = false);
     //Rotates the piece in place.
 

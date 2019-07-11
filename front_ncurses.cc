@@ -11,6 +11,7 @@ void front_ncurses::start() {
   initscr();
   cbreak();
   keypad(stdscr, TRUE);
+  noecho();
 
   //Initialize color
   start_color();
@@ -129,6 +130,7 @@ void front_ncurses::handle_input(GameBoard& gb) {
   switch(inp) {
     case KEY_LEFT:  gb.move_active_piece(1, -1); break;
     case KEY_RIGHT: gb.move_active_piece(1,  1); break;
+    case 'r':       gb.rotate_active_piece();    break;
     default:        gb.move_active_piece(1,  0);
   }
 }
