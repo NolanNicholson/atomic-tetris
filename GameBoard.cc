@@ -88,6 +88,11 @@ void GameBoard::commit_active_piece() {
 
   //Reset the active piece coordinates (to the top of the screen)
   reset_active_piece_coords();
+  //Set the active piece to the (former) next piece
+  active_piece = next_piece;
+  //Generate a new next piece
+  Piece new_piece;
+  next_piece = new_piece;
 }
 
 void GameBoard::remove_line(int y_remove) {
