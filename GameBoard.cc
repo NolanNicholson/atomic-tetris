@@ -74,6 +74,12 @@ bool GameBoard::move_active_piece(int dy, int dx) {
   return true;
 }
 
+void GameBoard::snap_active_piece_down() {
+  while (move_active_piece(1, 0)) {
+    //nothing in here on purpose - the loop criterion handles it
+  }
+}
+
 bool GameBoard::rotate_active_piece(bool clockwise) {
   int new_x[Piece::max_num_blocks];
   int new_y[Piece::max_num_blocks];

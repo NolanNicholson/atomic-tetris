@@ -34,6 +34,8 @@ class GameBoard {
     //Moves the active piece dy units down and dx units right,
     //but only if that move keeps the piece in a valid location.
     //Returns True if moved successfully, False if not.
+
+    void snap_active_piece_down();
     
     bool rotate_active_piece(bool clockwise = true);
     //Rotates the active piece, clockwise if `clockwise` is true,

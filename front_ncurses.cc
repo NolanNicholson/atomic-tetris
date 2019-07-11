@@ -125,15 +125,23 @@ void front_ncurses::render_board(GameBoard gb) {
 }
 
 void front_ncurses::handle_input(GameBoard& gb, bool& user_quit) {
+  static int timer = 0;
   user_quit = false;
-  timeout(200);
+  timeout(10);
   int inp = getch();
   switch(inp) {
     case KEY_LEFT:  gb.move_active_piece(0, -1); break;
     case KEY_RIGHT: gb.move_active_piece(0,  1); break;
+    case KEY_DOWN:  gb.move_active_piece(1,  0); break;
+    case KEY_UP:    gb.snap_active_piece_down(); break;
     case 'r':       gb.rotate_active_piece();    break;
     case 'q':       user_quit = true;            break;
-    default:        gb.move_active_piece(1,  0); break;
+  }
+
+  timer++;
+  if (timer >= 100) {
+    gb.move_active_piece(1, 0);
+    timer = 0;
   }
 }
 
