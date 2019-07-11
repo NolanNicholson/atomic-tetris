@@ -129,8 +129,8 @@ void front_ncurses::handle_input(GameBoard& gb, bool& user_quit) {
   timeout(200);
   int inp = getch();
   switch(inp) {
-    case KEY_LEFT:  gb.move_active_piece(1, -1); break;
-    case KEY_RIGHT: gb.move_active_piece(1,  1); break;
+    case KEY_LEFT:  gb.move_active_piece(0, -1); break;
+    case KEY_RIGHT: gb.move_active_piece(0,  1); break;
     case 'r':       gb.rotate_active_piece();    break;
     case 'q':       user_quit = true;            break;
     default:        gb.move_active_piece(1,  0); break;

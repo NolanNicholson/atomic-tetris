@@ -58,10 +58,14 @@ bool GameBoard::move_active_piece(int dy, int dx) {
   int y_coords[Piece::max_num_blocks];
   active_piece.get_coords(x_coords, y_coords);
 
-  //Check the new block coordinates for validity
+  //Check the new block coordinates for validity.
+  //If the move was a downward move, then commit the piece.
   for (int i = 0; i < Piece::max_num_blocks; i++) {
-    if (!is_valid_and_free_location(new_y + y_coords[i], new_x + x_coords[i]))
+    if (!is_valid_and_free_location(new_y + y_coords[i], new_x + x_coords[i])) {
+      if (dy > 0)
+        commit_active_piece();
       return false;
+    }
   }
 
   //Apply the transformation if successful

@@ -7,14 +7,11 @@ int main() {
 
   bool user_quit = false;
   fn.start();
-  for (int i = 0; i < 20 * 20; i++) {
+  while (true) {
     fn.render_board(gb_test);
     fn.handle_input(gb_test, user_quit);
-    if (user_quit) {
+    if (user_quit)
       break;
-    }
-    if (i && !(i % 20))
-      gb_test.commit_active_piece();
   }
 
   fn.quit();
