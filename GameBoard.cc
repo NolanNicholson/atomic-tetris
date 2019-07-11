@@ -32,15 +32,42 @@ void GameBoard::get_active_piece_yx(int& y, int& x) const {
   x = active_piece_x;
 }
 
+bool GameBoard::is_valid_and_free_location(int y, int x) const {
+  //Check if out-of-bounds
+  if (!(y >= 0 && y < num_total_rows && x >= 0 && x < num_cols)) {
+    return false;
+  }
+  //Check if occupied
+  if (!board_contents[y][x].is_free()) {
+    return false;
+  }
+  return true;
+}
+
 void GameBoard::reset_active_piece_coords() {
   active_piece_x = num_cols / 2;
   active_piece_y = num_visible_rows + 0;
 }
 
-void GameBoard::move_active_piece(int dy, int dx) {
+bool GameBoard::move_active_piece(int dy, int dx) {
   //Moves the active piece dy units down and dx units right.
-  active_piece_y -= dy;
-  active_piece_x += dx;
+  int new_y = active_piece_y - dy;
+  int new_x = active_piece_x + dx;
+
+  int x_coords[Piece::max_num_blocks];
+  int y_coords[Piece::max_num_blocks];
+  active_piece.get_coords(x_coords, y_coords);
+
+  //Check the new block coordinates for validity
+  for (int i = 0; i < Piece::max_num_blocks; i++) {
+    if (!is_valid_and_free_location(new_y + y_coords[i], new_x + x_coords[i]))
+      return false;
+  }
+
+  //Apply the transformation if successful
+  active_piece_y = new_y;
+  active_piece_x = new_x;
+  return true;
 }
 
 void GameBoard::commit_active_piece() {

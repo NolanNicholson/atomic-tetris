@@ -27,8 +27,13 @@ class GameBoard {
     void get_active_piece_yx(int& y, int& x) const;
     //Assigns y and x to the coordinates of the active piece
 
-    void move_active_piece(int dy, int dx);
-    //Moves the active piece dy units down and dx units right.
+    bool is_valid_and_free_location(int y, int x) const;
+    //Returns true if the location at y, x is in-bounds and free, false if not
+
+    bool move_active_piece(int dy, int dx);
+    //Moves the active piece dy units down and dx units right,
+    //but only if that move keeps the piece in a valid location.
+    //Returns True if moved successfully, False if not.
 
     void reset_active_piece_coords();
     //Resets the coordinates of the active piece to the top of the board.
