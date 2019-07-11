@@ -12,7 +12,6 @@ int main() {
 
   fn.start();
   fn.render_board(gb_test);
-  fn.render_piece(stdscr, gb_test.get_next_piece(), 20, 30);
   fn.wait_for_input();
   fn.quit();
 }

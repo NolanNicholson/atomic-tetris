@@ -62,6 +62,7 @@ void front_ncurses::render_block(WINDOW *w, int y, int x, BlockType bt) {
 
 void front_ncurses::render_board(GameBoard gb) {
 
+  //Render the blocks on the gameboard
   for (int y = 0; y < gb.num_visible_rows; y++) {
     for (int x = 0; x < gb.num_cols; x++) {
       BlockType bt = gb.get_block_type_at(y, x);
@@ -72,9 +73,14 @@ void front_ncurses::render_board(GameBoard gb) {
   }
   wrefresh(gameboard_win);
   
+  //Print score and other information
   mvprintw(3, 30, "Score:");
   mvprintw(6, 30, "Level:");
   mvprintw(9, 30, "Lines:");
+
+  //Show the next piece
+  render_piece(stdscr, gb.get_next_piece(), 20, 32);
+
   refresh();
 }
 
