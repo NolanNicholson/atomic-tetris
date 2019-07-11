@@ -27,6 +27,9 @@ class front_ncurses {
 
     void render_board(GameBoard gb);
     //Renders the screen, including the provided GameBoard
+
+    void handle_input(GameBoard& gb);
+    //Handles input, making changes to `gb`'s state to move pieces, etc.
     
     void wait_for_input();
     //Just waits for input - allows pausing and examining output

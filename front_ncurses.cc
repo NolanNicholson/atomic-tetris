@@ -105,7 +105,18 @@ void front_ncurses::render_board(GameBoard gb) {
   wrefresh(gameboard_win);
 }
 
+void front_ncurses::handle_input(GameBoard& gb) {
+  timeout(200);
+  int inp = getch();
+  switch(inp) {
+    case KEY_LEFT:  gb.move_active_piece(1, -1); break;
+    case KEY_RIGHT: gb.move_active_piece(1,  1); break;
+    default:        gb.move_active_piece(1,  0);
+  }
+}
+
 void front_ncurses::wait_for_input() {
+  timeout(-1);
   getch();
 }
 
