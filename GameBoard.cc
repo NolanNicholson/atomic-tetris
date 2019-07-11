@@ -32,6 +32,11 @@ void GameBoard::get_active_piece_yx(int& y, int& x) const {
   x = active_piece_x;
 }
 
+void GameBoard::reset_active_piece_coords() {
+  active_piece_x = num_cols / 2;
+  active_piece_y = num_visible_rows + 0;
+}
+
 void GameBoard::move_active_piece(int dy, int dx) {
   //Moves the active piece dy units down and dx units right.
   active_piece_y -= dy;
@@ -39,18 +44,23 @@ void GameBoard::move_active_piece(int dy, int dx) {
 }
 
 void GameBoard::commit_active_piece() {
+  //Get coordinate and type information for the active piece
   int x, y;
   int x_coords[Piece::max_num_blocks];
   int y_coords[Piece::max_num_blocks];
   active_piece.get_coords(x_coords, y_coords);
   BlockType active_type = active_piece.get_type();
 
+  //Change the appropriate blocks on the board to the active piece's type
   for (int i = 0; i < Piece::max_num_blocks; i++) {
     x = x_coords[i] + active_piece_x;
     y = y_coords[i] + active_piece_y;
     if (y >= 0 && y < num_total_rows && x >= 0 && x < num_cols)
       board_contents[y][x].type = active_type;
   }
+
+  //Reposition the active piece
+  reset_active_piece_coords();
 }
 
 void GameBoard::remove_line(int y_remove) {
@@ -82,4 +92,5 @@ GameBoard::GameBoard() {
       board_contents[y][x].free();
     }
   }
+  reset_active_piece_coords();
 }

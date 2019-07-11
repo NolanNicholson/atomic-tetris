@@ -30,6 +30,9 @@ class GameBoard {
     void move_active_piece(int dy, int dx);
     //Moves the active piece dy units down and dx units right.
 
+    void reset_active_piece_coords();
+    //Resets the coordinates of the active piece to the top of the board.
+
     void commit_active_piece();
     //Commits the active piece to the board.
     //Assigns next_piece to active_piece. Generates a new next_piece.
@@ -56,8 +59,8 @@ class GameBoard {
 
     //The active piece and its coordinates on the game board
     Piece active_piece;
-    int active_piece_x = num_cols / 2;
-    int active_piece_y = num_visible_rows + 0;
+    int active_piece_x;
+    int active_piece_y;
 
     Piece next_piece;
 };
