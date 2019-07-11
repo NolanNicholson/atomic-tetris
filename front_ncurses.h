@@ -39,6 +39,7 @@ class front_ncurses {
 
   private:
     WINDOW *gameboard_win;
+    WINDOW *gameboard_border_win;
 
 };
 

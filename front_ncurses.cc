@@ -22,11 +22,18 @@ void front_ncurses::start() {
     init_pair(i, COLOR_BLACK, i);
   }
 
+  //Create border for the game board
+  gameboard_border_win = newwin(
+      GameBoard::num_visible_rows + 2,
+      GameBoard::num_cols * 2 + 2,
+      0, 1);
+
   //Create window to hold the game board
   gameboard_win = newwin(
       GameBoard::num_visible_rows,
       GameBoard::num_cols * 2, // *2 because chars are half-width
       1, 2); //starty, startx
+
   refresh();
 
   //Make cursor invisible
@@ -74,6 +81,7 @@ void front_ncurses::render_board(GameBoard gb) {
 
   //Clear the board
   werase(gameboard_win);
+  box(gameboard_border_win, 0, '#');
 
   //Render the blocks on the gameboard
   for (int y = 0; y < gb.num_visible_rows; y++) {
@@ -102,6 +110,7 @@ void front_ncurses::render_board(GameBoard gb) {
   render_piece(stdscr, gb.get_next_piece(), 15, 30);
 
   //Update window
+  wrefresh(gameboard_border_win);
   wrefresh(gameboard_win);
 }
 
