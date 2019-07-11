@@ -6,6 +6,17 @@
 
 #include "Piece.h"
 
+BlockType PieceRNG::get_random_type() {
+  int type_num = distribution(generator); // generate random number
+
+  return static_cast<BlockType>(type_num);
+  //return static_cast<BlockType>(3);
+}
+
+PieceRNG::PieceRNG()
+  : generator(rand_dev()), distribution(1, 7){
+}
+
 void Piece::rotate(bool clockwise) {
 
 }
@@ -22,9 +33,11 @@ BlockType Piece::get_type() const {
 }
 
 Piece::Piece(BlockType type) {
+  PieceRNG p_rng;
+
   if (type == kNoBlock) {
     //Randomize the piece type if it is kNoBlock
-    type = kLBlock; //TODO
+    type = p_rng.get_random_type();
   }
   piece_type = type;
 

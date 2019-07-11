@@ -86,7 +86,7 @@ void GameBoard::commit_active_piece() {
       board_contents[y][x].type = active_type;
   }
 
-  //Reposition the active piece
+  //Reset the active piece coordinates (to the top of the screen)
   reset_active_piece_coords();
 }
 
