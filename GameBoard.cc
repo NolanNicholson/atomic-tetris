@@ -112,6 +112,14 @@ void GameBoard::commit_active_piece() {
       board_contents[y][x].type = active_type;
   }
 
+  //Check for completed lines to clear
+  for (int i = 0; i < num_total_rows; i++) {
+    if (check_line_full(i)) {
+      remove_line(i);
+      i--;
+    }
+  }
+
   //Reset the active piece coordinates (to the top of the screen)
   reset_active_piece_coords();
   //Set the active piece to the (former) next piece
