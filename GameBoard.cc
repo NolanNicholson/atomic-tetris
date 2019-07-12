@@ -115,8 +115,7 @@ void GameBoard::commit_active_piece() {
   //Check for completed lines to clear
   for (int i = 0; i < num_total_rows; i++) {
     if (check_line_full(i)) {
-      remove_line(i);
-      i--;
+      lines_currently_clearing[i] = true;
     }
   }
 
@@ -127,6 +126,15 @@ void GameBoard::commit_active_piece() {
   //Generate a new next piece
   Piece new_piece;
   next_piece = new_piece;
+}
+
+void GameBoard::finish_clearing_lines() {
+  for (int y = num_visible_rows - 1; y >= 0; y--) {
+    if (lines_currently_clearing[y]) {
+      remove_line(y);
+      lines_currently_clearing[y] = false;
+    }
+  }
 }
 
 void GameBoard::remove_line(int y_remove) {

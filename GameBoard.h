@@ -47,6 +47,11 @@ class GameBoard {
     void commit_active_piece();
     //Commits the active piece to the board.
     //Assigns next_piece to active_piece. Generates a new next_piece.
+    
+    void finish_clearing_lines();
+    //Concludes a set of line clears by checking lines_currently_clearing
+    //for any `true` values. If any values are `true`, clears the corresponding
+    //row and sets that value to `false`.
 
     void remove_line(int y_remove);
     //Removes the line at position y.
@@ -61,6 +66,9 @@ class GameBoard {
     static const int num_total_rows = num_buffer_rows + num_visible_rows;
     static const int num_cols = 10;
 
+    //Lines currently being cleared (for use by front-end animations)
+    bool lines_currently_clearing[num_visible_rows] = {false};
+
   private:
 
     //Internal representation of the game board.
@@ -73,6 +81,7 @@ class GameBoard {
     int active_piece_x;
     int active_piece_y;
 
+    //The next piece in line
     Piece next_piece;
 };
 

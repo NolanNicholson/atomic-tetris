@@ -95,8 +95,19 @@ void front_ncurses::render_board(GameBoard gb) {
     for (int x = 0; x < gb.num_cols; x++) {
       BlockType bt = gb.get_block_type_at(y, x);
       //y-coordinate has to be inverted
-      front_ncurses::render_block(gameboard_win,
-          gb.num_visible_rows-1-y, x, bt);
+      render_block(gameboard_win, gb.num_visible_rows-1-y, x, bt);
+    }
+  }
+
+  //Handle blinking-line animations
+  if (animation_timer && (animation_timer / 10) % 2) {
+    for (int y = 0; y < gb.num_visible_rows; y++) {
+      if (gb.lines_currently_clearing[y]) {
+        for (int x = 0; x < gb.num_cols; x++) {
+          //y-coordinate has to be inverted
+          render_block(gameboard_win, gb.num_visible_rows-1-y, x, kOBlock);
+        }
+      }
     }
   }
 
@@ -125,10 +136,26 @@ void front_ncurses::render_board(GameBoard gb) {
 }
 
 void front_ncurses::handle_input(GameBoard& gb, bool& user_quit) {
-  static int timer = 0;
+  static int game_timer = 0;
   user_quit = false;
+
   timeout(10);
   int inp = getch();
+
+  bool any_lines_clearing = false;
+  for (int i = 0; i < gb.num_visible_rows; i++) {
+    any_lines_clearing = any_lines_clearing || gb.lines_currently_clearing[i];
+  }
+  if (any_lines_clearing) {
+    animation_timer++;
+    if (animation_timer > 40) {
+      gb.finish_clearing_lines();
+      animation_timer = 0;
+    }
+    //don't handle input or advance game time while an animation is playing
+    return;
+  }
+
   switch(inp) {
     case KEY_LEFT:  gb.move_active_piece(0, -1); break;
     case KEY_RIGHT: gb.move_active_piece(0,  1); break;
@@ -138,10 +165,10 @@ void front_ncurses::handle_input(GameBoard& gb, bool& user_quit) {
     case 'q':       user_quit = true;            break;
   }
 
-  timer++;
-  if (timer >= 100) {
+  game_timer++;
+  if (game_timer >= 100) {
     gb.move_active_piece(1, 0);
-    timer = 0;
+    game_timer = 0;
   }
 }
 

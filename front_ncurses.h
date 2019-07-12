@@ -43,6 +43,8 @@ class front_ncurses {
     WINDOW *gameboard_border_win;
     WINDOW *game_info_win;
 
+    int animation_timer = 0;
+
 };
 
 #endif //FRONT_NCURSES_H
