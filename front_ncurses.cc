@@ -99,8 +99,8 @@ void front_ncurses::render_board(GameBoard gb) {
     }
   }
 
-  //Handle blinking-line animations
-  if (animation_timer && (animation_timer / 10) % 2) {
+  //Handle line-clearing animations
+  if (anim_timer_line_clear && (anim_timer_line_clear / 10) % 2) {
     for (int y = 0; y < gb.num_visible_rows; y++) {
       if (gb.lines_currently_clearing[y]) {
         for (int x = 0; x < gb.num_cols; x++) {
@@ -118,6 +118,17 @@ void front_ncurses::render_board(GameBoard gb) {
       gb.num_visible_rows - 1 - active_y, //since coords are stored bottom-up
       active_x * 2);                      //since blocks are 2 chars wide
   
+  //Handle game-over animation
+  if (anim_timer_game_over) {
+    for (int y = 0;
+        y < anim_timer_game_over / anim_speed_game_over;
+        y++) {
+      for(int x = 0; x < gb.num_cols; x++) {
+        render_block(gameboard_win, gb.num_visible_rows-1-y, x, kOBlock);
+      }
+    }
+  }
+
   //Game info window
   werase(game_info_win);
 
@@ -154,12 +165,23 @@ void front_ncurses::handle_input(GameBoard& gb, bool& user_quit) {
     any_lines_clearing = any_lines_clearing || gb.lines_currently_clearing[i];
   }
   if (any_lines_clearing) {
-    animation_timer++;
-    if (animation_timer > 40) {
+    anim_timer_line_clear++;
+    if (anim_timer_line_clear > 40) {
       gb.finish_clearing_lines();
-      animation_timer = 0;
+      anim_timer_line_clear = 0;
     }
-    //don't handle input or advance game time while an animation is playing
+    //don't handle input or advance game time if this animation is active
+    return;
+  }
+
+  if (gb.get_game_over()) {
+    anim_timer_game_over++;
+    if (anim_timer_game_over / anim_speed_game_over > gb.num_visible_rows) {
+      timeout(-1);
+      getch();
+      user_quit = true;
+    }
+    //don't handle input or advance game time if this animation is active
     return;
   }
 

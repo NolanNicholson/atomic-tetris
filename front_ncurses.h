@@ -43,7 +43,9 @@ class front_ncurses {
     WINDOW *gameboard_border_win;
     WINDOW *game_info_win;
 
-    int animation_timer = 0;
+    int anim_timer_line_clear = 0;
+    int anim_timer_game_over = 0;
+    int anim_speed_game_over = 3;
 
 };
 

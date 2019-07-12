@@ -20,6 +20,9 @@ class GameBoard {
 
     int get_lines() const;
     //Returns the number of lines.
+
+    bool get_game_over() const;
+    //Returns whether or not the game is over.
     
     bool check_line_full(int y) const;
     //Checks whether the line at position y is full of blocks.
@@ -98,6 +101,7 @@ class GameBoard {
     int score = 0;
     int lines = 0;
     int level = 1;
+    bool game_over = false;
 };
 
 #endif //GAMEBOARD_H

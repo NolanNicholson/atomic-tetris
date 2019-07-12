@@ -18,6 +18,10 @@ int GameBoard::get_lines() const {
   return lines;
 }
 
+bool GameBoard::get_game_over() const {
+  return game_over;
+}
+
 bool GameBoard::check_line_full(int y) const {
   for (int x = 0; x < num_cols; x++) {
     if (board_contents[y][x].is_free()) {
@@ -138,6 +142,15 @@ void GameBoard::commit_active_piece() {
   //Generate a new next piece
   Piece new_piece;
   next_piece = new_piece;
+
+  //Check if the game is over
+  for (int y = num_visible_rows + 1; y < num_total_rows; y++) {
+    for (int x = 0; x < num_cols; x++) {
+      if (!board_contents[y][x].is_free()) {
+        game_over = true;
+      }
+    }
+  }
 }
 
 void GameBoard::finish_clearing_lines() {
