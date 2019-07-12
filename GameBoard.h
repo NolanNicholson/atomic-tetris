@@ -101,6 +101,7 @@ class GameBoard {
     int score = 0;
     int lines = 0;
     int level = 1;
+    static const int max_level = 20;
     bool game_over = false;
 };
 

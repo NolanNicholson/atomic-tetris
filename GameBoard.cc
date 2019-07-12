@@ -168,6 +168,9 @@ void GameBoard::finish_clearing_lines() {
       //okay we don't need to clear it anymore
       lines_currently_clearing[y] = false;
     }
+
+    //Cap the level
+    level = (level > max_level ? max_level : level);
   }
 
   //Score based on the number of lines cleared
