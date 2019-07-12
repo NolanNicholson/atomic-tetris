@@ -6,6 +6,18 @@
 
 #include "GameBoard.h"
 
+int GameBoard::get_score() const {
+  return score;
+}
+
+int GameBoard::get_level() const {
+  return level;
+}
+
+int GameBoard::get_lines() const {
+  return lines;
+}
+
 bool GameBoard::check_line_full(int y) const {
   for (int x = 0; x < num_cols; x++) {
     if (board_contents[y][x].is_free()) {
@@ -129,9 +141,18 @@ void GameBoard::commit_active_piece() {
 }
 
 void GameBoard::finish_clearing_lines() {
+  int cleared_lines = 0;
   for (int y = num_visible_rows - 1; y >= 0; y--) {
     if (lines_currently_clearing[y]) {
+      //remove the blocks
       remove_line(y);
+      //need to increment lines one a time, but need to count total
+      //lines cleared for scoring reasons
+      cleared_lines++;
+      lines++;
+      if (!(lines % 10))
+        level++;
+      //okay we don't need to clear it anymore
       lines_currently_clearing[y] = false;
     }
   }

@@ -118,12 +118,19 @@ void front_ncurses::render_board(GameBoard gb) {
       gb.num_visible_rows - 1 - active_y, //since coords are stored bottom-up
       active_x * 2);                      //since blocks are 2 chars wide
   
+  //Game info window
   werase(game_info_win);
 
-  //Print score and other information
+  //Print game information
   mvwprintw(game_info_win, 0, 0, "Score:");
+  mvwprintw(game_info_win, 1, 0, "%d", gb.get_score()); 
+
   mvwprintw(game_info_win, 3, 0, "Level:");
+  mvwprintw(game_info_win, 4, 0, "%d", gb.get_level()); 
+
   mvwprintw(game_info_win, 6, 0, "Lines:");
+  mvwprintw(game_info_win, 7, 0, "%d", gb.get_lines()); 
+
   mvwprintw(game_info_win, 9, 0, "Next:");
 
   //Show the next piece

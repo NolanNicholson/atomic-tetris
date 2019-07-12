@@ -12,6 +12,15 @@
 
 class GameBoard {
   public:
+    int get_score() const;
+    //Returns the score.
+
+    int get_level() const;
+    //Returns the gameplay level.
+
+    int get_lines() const;
+    //Returns the number of lines.
+    
     bool check_line_full(int y) const;
     //Checks whether the line at position y is full of blocks.
 
@@ -61,6 +70,7 @@ class GameBoard {
 
     GameBoard();
 
+    //Board dimensions
     static const int num_visible_rows = 20; 
     static const int num_buffer_rows = 4; //hold pieces above the player view
     static const int num_total_rows = num_buffer_rows + num_visible_rows;
@@ -83,6 +93,11 @@ class GameBoard {
 
     //The next piece in line
     Piece next_piece;
+
+    //Game information
+    int score = 0;
+    int lines = 0;
+    int level = 1;
 };
 
 #endif //GAMEBOARD_H
