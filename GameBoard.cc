@@ -88,7 +88,7 @@ bool GameBoard::move_active_piece(int dy, int dx) {
 
 void GameBoard::snap_active_piece_down() {
   while (move_active_piece(1, 0)) {
-    //nothing in here on purpose - the loop criterion handles it
+    score++;
   }
 }
 
@@ -155,6 +155,14 @@ void GameBoard::finish_clearing_lines() {
       //okay we don't need to clear it anymore
       lines_currently_clearing[y] = false;
     }
+  }
+
+  //Score based on the number of lines cleared
+  switch(cleared_lines) {
+    case 1: score += 40 * level;    break;
+    case 2: score += 100 * level;   break;
+    case 3: score += 300 * level;   break;
+    case 4: score += 1200 * level;  break;
   }
 }
 
