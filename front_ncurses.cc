@@ -195,7 +195,8 @@ void front_ncurses::handle_input(GameBoard& gb, bool& user_quit) {
   }
 
   game_timer++;
-  if (game_timer >= 100 - 4 * gb.get_level()) {
+  int lv = gb.get_level();
+  if (game_timer >= 100 - 9 * (lv > 10 ? 10 : lv)) {
     gb.move_active_piece(1, 0);
     game_timer = 0;
   }
